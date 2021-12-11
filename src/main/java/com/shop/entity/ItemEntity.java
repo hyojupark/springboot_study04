@@ -10,6 +10,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
+@Entity
+@Table(name = "Item")
 public class ItemEntity extends BaseTimeEntity {
 
     @Id
