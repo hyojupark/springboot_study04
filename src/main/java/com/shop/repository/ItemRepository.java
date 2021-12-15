@@ -1,13 +1,13 @@
 package com.shop.repository;
 
-import com.shop.entity.ItemEntity;
+import com.shop.entity.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface ItemRepository extends JpaRepository<ItemEntity, Long> {
+public interface ItemRepository extends JpaRepository<Item, Long> {
 
-    List<ItemEntity> findByItemNm(String itemNm);
+    List<Item> findByItemNm(String itemNm);
 }

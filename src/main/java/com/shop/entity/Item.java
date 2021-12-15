@@ -1,18 +1,14 @@
 package com.shop.entity;
 
 import com.shop.constant.ItemSellStatus;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
-@ToString
 @Entity
-@Table(name = "Item")
-public class ItemEntity extends BaseTimeEntity {
+@Table(name = "item")
+@Data
+public class Item extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
