@@ -2,9 +2,11 @@ package com.shop.entity;
 
 import com.shop.constant.ItemSellStatus;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "item")
 @Data
