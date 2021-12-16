@@ -24,7 +24,7 @@ class MemberServiceTest {
     public Member createMember() {
         MemberFormDto memberFormDto = new MemberFormDto();
         memberFormDto.setName("홍길동");
-        memberFormDto.setAddress("test@gmail.com");
+        memberFormDto.setEmail("test@gmail.com");
         memberFormDto.setAddress("서울시 마포구 합정동");
         memberFormDto.setPassword("1234");
         return Member.createMember(memberFormDto, passwordEncoder);
