@@ -1,12 +1,14 @@
 package com.shop.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "order_item")
-@Data
+@Getter
+@Setter
 public class OrderItem extends BaseTimeEntity {
 
     @Id
@@ -14,11 +16,11 @@ public class OrderItem extends BaseTimeEntity {
     @Column(name = "order_item_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
 
