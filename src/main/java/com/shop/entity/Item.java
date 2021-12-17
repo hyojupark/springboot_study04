@@ -13,6 +13,7 @@ import javax.persistence.*;
 public class Item extends BaseTimeEntity {
 
     @Id
+    @Column(name = "item_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;  // 상품 크도
 
