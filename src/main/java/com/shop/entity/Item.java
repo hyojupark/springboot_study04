@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "item")
 @Data
-public class Item extends BaseTimeEntity {
+public class Item extends BaseEntity {
 
     @Id
     @Column(name = "item_id")
