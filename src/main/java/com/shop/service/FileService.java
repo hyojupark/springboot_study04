@@ -1,4 +1,4 @@
-package com.shop.controller;
+package com.shop.service;
 
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
