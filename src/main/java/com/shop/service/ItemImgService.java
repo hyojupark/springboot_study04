@@ -17,7 +17,10 @@ import java.util.Objects;
 @Transactional
 public class ItemImgService {
 
-    @Value("${itemImgLocation}/")
+    @Value("${itemImgRelLocation}")
+    private String itemImgRelLocation;
+
+    @Value("${itemImgLocation}")
     private String itemImgLocation;
 
     private final ItemImgRepository itemImgRepository;
@@ -31,7 +34,7 @@ public class ItemImgService {
 
         if (!StringUtils.isEmpty(oriImgName)) {
             imgName = fileService.uploadFile(itemImgLocation, oriImgName, itemImgFile.getBytes());
-            imgUrl = itemImgLocation + imgName;
+            imgUrl = itemImgRelLocation + imgName;
         }
 
         itemImg.updateItemImg(oriImgName, imgName, imgUrl);
@@ -48,7 +51,7 @@ public class ItemImgService {
 
             String oriImgName = Objects.requireNonNull(itemImgFile.getOriginalFilename());
             String imgName = fileService.uploadFile(itemImgLocation, oriImgName, itemImgFile.getBytes());
-            String imgUrl = itemImgLocation + imgName;
+            String imgUrl = itemImgRelLocation + imgName;
             savedItemImg.updateItemImg(oriImgName, imgName, imgUrl);
         }
     }
