@@ -2,7 +2,9 @@ package com.shop.repository;
 
 import com.shop.constant.ItemSellStatus;
 import com.shop.dto.ItemSearchDto;
+import com.shop.dto.MainItemDto;
 import com.shop.entity.Item;
+import ognl.BooleanExpression;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +35,6 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                 "ORDER BY i.id desc",
                 searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
                 searchByLike(itemSearchDto.getSearchBy(), itemSearchDto.getSearchQuery()));
-//        String queryString = "SELECT i FROM Item as i";
         TypedQuery<Item> query = em.createQuery(queryString, Item.class);
 //        TypedQuery<Item> query = em.createNativeQuery(queryString, Item.class);
         query.setParameter("startDate", createSdtAfter(itemSearchDto.getSearchDateType()));
@@ -48,9 +49,6 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 
         List<Item> itemList = query.getResultList();
 
-//        int start = (int)pageable.getOffset();
-//        int end = (start + pageable.getPageSize() > )
-//        Page<Item> results = new PageImpl<>(dtos.subList());
         return new PageImpl<>(itemList);
     }
 
@@ -86,5 +84,25 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
         }
 
         return "";
+    }
+
+    @Override
+    public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+        String queryString = "SELECT NEW com.shop.dto.MainItemDto(i.id, i.itemNm, i.itemDetail, im.imgUrl, i.price) " +
+                "FROM ItemImg as im INNER JOIN im.item as i " +
+                "WHERE im.repImgYn='Y' " +
+                searchByLike("itemNm", itemSearchDto.getSearchQuery()) +
+                "ORDER BY i.id desc";
+        TypedQuery<MainItemDto> query = em.createQuery(queryString, MainItemDto.class);
+
+        if (!StringUtils.isEmpty(itemSearchDto.getSearchQuery())) {
+            query.setParameter("searchQuery", itemSearchDto.getSearchQuery());
+        }
+
+        query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        query.setMaxResults(pageable.getPageSize());
+        List<MainItemDto> itemList = query.getResultList();
+
+        return new PageImpl<>(itemList);
     }
 }
