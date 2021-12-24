@@ -59,7 +59,7 @@ public class ItemController {
     }
 
     @GetMapping(value = "/admin/item/{itemId}")
-    public String itemDtl(@PathVariable("itemId") Long itemId, Model model) {
+    public String itemDtlAdmin(@PathVariable("itemId") Long itemId, Model model) {
         try {
             ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
             model.addAttribute("itemFormDto", itemFormDto);
@@ -101,5 +101,17 @@ public class ItemController {
         model.addAttribute("itemSearchDto", itemSearchDto);
         model.addAttribute("maxPage", 5);
         return "item/itemMng";
+    }
+
+    @GetMapping(value = "/item/{itemId}")
+    public String itemDtl(@PathVariable("itemId") Long itemId, Model model) {
+        try {
+            ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
+            model.addAttribute("item", itemFormDto);
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "존재하지 않는 상품입니다.");
+            model.addAttribute("itemFormDto", new ItemFormDto());
+        }
+        return "item/itemDtl";
     }
 }
