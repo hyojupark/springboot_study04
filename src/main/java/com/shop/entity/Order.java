@@ -31,4 +31,25 @@ public class Order extends BaseEntity {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<OrderItem> orderItems = new ArrayList<>();
+
+    public void addOrderItem(OrderItem orderItem) {
+        this.orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
+
+    public static Order createOrder(Member member, List<OrderItem> orderItemList) {
+        Order order = new Order();
+        order.setMember(member);
+        for (OrderItem orderItem : orderItemList) {
+            order.addOrderItem(orderItem);
+        }
+        order.setOrderStatus(OrderStatus.ORDER);
+        order.setOrderDate(LocalDateTime.now());
+
+        return order;
+    }
+
+    public int getTotalPrice() {
+        return this.orderItems.stream().mapToInt(OrderItem::getTotalPrice).sum();
+    }
 }
