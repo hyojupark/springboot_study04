@@ -49,6 +49,14 @@ public class Order extends BaseEntity {
         return order;
     }
 
+    public void cancelOrder() {
+        this.orderStatus = OrderStatus.CANCEL;
+
+        for (OrderItem orderItem : this.orderItems) {
+            orderItem.cancel();
+        }
+    }
+
     public int getTotalPrice() {
         return this.orderItems.stream().mapToInt(OrderItem::getTotalPrice).sum();
     }
